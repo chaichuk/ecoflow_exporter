@@ -94,7 +94,9 @@ class EcoflowMQTT():
         self.password = password
         self.topic = f"/app/device/property/{device_sn}"
 
-        self.client = mqtt.Client(f'python-mqtt-{random.randint(0, 100)}')
+        client_id ="ANDROID_" + str(uuid.uuid4()).upper() + "_" + self.user_id
+        log.info(f"Connecting to MQTT Broker with client_id: {client_id}")
+        self.client = mqtt.Client(client_id=client_id)
         self.client.username_pw_set(self.username, self.password)
         self.client.tls_set(certfile=None, keyfile=None, cert_reqs=ssl.CERT_REQUIRED)
         self.client.tls_insecure_set(False)
